@@ -6,11 +6,20 @@
 
 using namespace std;
 
-void passwdGenerator(int sizepassw, string nameServicePasswd){
+void passwdGenerator(int sizepassw, string nameServicePasswd, string skipped){
     string dict = " !'#$%&\()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"; //строка содержит все доступные символы
     string passwd = "";
     for(int i = 0; i < sizepassw; i++) {
+        int pointerx = 0;
         char c = dict[rand() % dict.size()]; //в переменную с записывается случайный из них
+        for (int j = 0; j < skipped.size(); j++) {
+            if (c != skipped[j])
+                continue;
+            else
+                pointerx++;
+                break;
+        }
+        if (pointerx != i)
         passwd += c;
     }
     cout << passwd << endl;
@@ -28,6 +37,8 @@ int main() {
     string servicePasswd;
     cout << "Введите для какого сервиса вам пароль: ";
     cin >> servicePasswd;
-    passwdGenerator(iSizepasswd, servicePasswd);
-
+    cout << "Какие символы пропускать: ";
+    string symbolskip;
+    cin >> symbolskip;
+    passwdGenerator(iSizepasswd, servicePasswd, symbolskip);
 }
